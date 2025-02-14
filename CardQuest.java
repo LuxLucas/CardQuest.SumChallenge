@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class CardQuest implements ICardQuest{
     int[] cards                 = new int[9];
     int[] cardsOnTable          = new int[3];
@@ -14,7 +16,7 @@ public class CardQuest implements ICardQuest{
     }
 
     private int lastEmptyIndexInIntArray(int[] intArray){
-        for(int i = 0; i < intArray.length -1; i++){
+        for(int i = 0; i < intArray.length ; i++){
             if(intArray[i] == 0){
                 return i;
             }
@@ -24,11 +26,12 @@ public class CardQuest implements ICardQuest{
 
     private void shuffleCards(){
         int[] shuffledNumbers = new int[cards.length];
+        int lastEmptyIndex;
 
         while(inIntArray(shuffledNumbers, 0)){
             int randomNumber = (int)((Math.random() * cards.length)+1);
-            if(!inIntArray(shuffledNumbers, randomNumber)){
-                int lastEmptyIndex = lastEmptyIndexInIntArray(shuffledNumbers);
+            if(!inIntArray(shuffledNumbers, randomNumber) && inIntArray(shuffledNumbers, 0)){
+                lastEmptyIndex = lastEmptyIndexInIntArray(shuffledNumbers);
                 shuffledNumbers[lastEmptyIndex] = randomNumber;
             }
         }
@@ -86,14 +89,39 @@ public class CardQuest implements ICardQuest{
         return sum;
     }
 
-    private boolean evaluateResponse(int response){
+    private int question(){
+        Scanner in = new Scanner(System.in);
+        int sumFirstGroup   = sumOfItemsInIntArray(firstGroupOfCards);
+        int sumSecondGroup  = sumOfItemsInIntArray(secondGroupOfCards);
+
+        System.out.println("\nEm uma mesa há nove cartões numerados de 1 a 9. Ana e Beto pegaram três cartões cada um.");
+        System.out.printf("A soma dos números dos cartões de Ana é %d e a soma dos números dos cartões de Beto é %d. ", sumFirstGroup, sumSecondGroup);
+        System.out.println("\nQual é a diferença entre o maior e o menor dos números dos três cartões deixados sobre a mesa? ");
+        System.out.print("\nSua resposta: ");
+
+        int response = in.nextInt();
+        in.close();
+
+        return response;
+    }
+
+    private int correctResponse(){
         int minCardOnTable  = minIntInIntArray(cardsOnTable);
         int maxCardOnTale   = maxIntInIntArray(cardsOnTable);
 
-        return maxCardOnTale - minCardOnTable == response;
+        return maxCardOnTale - minCardOnTable;
     }
 
     public void play(){
-        System.out.print("Testando...");
+        shuffleCards();
+        distributeCards();
+
+        int response = question();
+        if(response == correctResponse()){
+            System.out.println("Resposta certa, parabéns!");
+        }else{
+            System.out.printf("Resposta errada. O correto é %d", correctResponse());
+        }
+
     }
 }
