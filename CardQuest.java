@@ -76,6 +76,23 @@ public class CardQuest implements ICardQuest{
         return min;
     }
 
+    private int sumOfItemsInIntArray(int[] intArray){
+        int sum = 0;
+
+        for(int i: intArray){
+            sum += i;
+        }
+
+        return sum;
+    }
+
+    private boolean evaluateResponse(int response){
+        int minCardOnTable  = minIntInIntArray(cardsOnTable);
+        int maxCardOnTale   = maxIntInIntArray(cardsOnTable);
+
+        return maxCardOnTale - minCardOnTable == response;
+    }
+
     public void play(){
         System.out.print("Testando...");
     }
