@@ -56,7 +56,15 @@ public class CardQuest implements ICardQuest{
         cardsOnTable        = slicedIntArray(cards, 6, 8);
     }
 
-
+    private int maxIntInIntArray(int[] intArray){
+        int max = intArray[0];
+        for(int i: intArray){
+            if(i > max){
+                max = i;
+            }
+        }
+        return max;
+    }
 
     public void play(){
         System.out.print("Testando...");
