@@ -66,6 +66,16 @@ public class CardQuest implements ICardQuest{
         return max;
     }
 
+    private int minIntInIntArray(int[] intArray){
+        int min = intArray[0];
+        for(int i: intArray){
+            if(i < min){
+                min = i;
+            }
+        }
+        return min;
+    }
+
     public void play(){
         System.out.print("Testando...");
     }
